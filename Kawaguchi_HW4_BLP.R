@@ -428,6 +428,14 @@ compute_indirect_utility_delta <-
     return(value)
   }
 
+
+delta <- df_share_smooth |>
+  mutate(delta = theta[1] * x_1 + theta[2] * x_2 + theta[3] * x_3 - exp(theta[7] +
+                                                                          (theta[8] ^ 2 / 2)) * p + xi) |>
+  select(t, j, delta)
+
+
+
 # compute indirect utility from delta
 u_delta <-
   compute_indirect_utility_delta(
@@ -437,11 +445,6 @@ u_delta <-
     mu, 
     omega
   )
-
-delta <- df_share_smooth |>
-  mutate(delta = theta[1] * x_1 + theta[2] * x_2 + theta[3] * x_3 - exp(theta[7] +
-                                                                          (theta[8] ^ 2 / 2)) * p + xi) |>
-  select(t, j, delta)
 
 
 # compute indirect utility from delta
@@ -642,6 +645,8 @@ df_share_smooth_delta <-
 
 kappa <- 1
 lambda <- 1e-4
+
+
 
 # solve delta by the fixed-point algorithm
 solve_delta <-
